@@ -22,10 +22,6 @@ public abstract class HttpPostAsyncTask<Params, Result> extends AsyncTask<Params
     private String request_method;
     protected HttpURLConnection conn = null;
 
-    public void setErrorMsg(String msg){
-        error_msg = msg;
-    }
-
     public HttpPostAsyncTask(Context c, String msg, String path){
         super();
         context = c;
