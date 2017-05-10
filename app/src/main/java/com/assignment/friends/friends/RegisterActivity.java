@@ -7,26 +7,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.alibaba.fastjson.JSON;
 import com.assignment.friends.friends.model.Profile;
 import com.assignment.friends.friends.util.Encryption;
 import com.assignment.friends.friends.util.HttpPostAsyncTask;
-import com.assignment.friends.friends.util.JsonHandler;
-
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Scanner;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -41,7 +34,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mFirstNameView;
     private EditText mSurnameView;
     private EditText mConfirmPasswordView;
-    private Button mRegisterButton;
     private View mProgressView;
     private View mRegisterFormView;
 
@@ -55,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         mFirstNameView = (EditText) findViewById(R.id.first_name);
         mSurnameView = (EditText) findViewById(R.id.surname);
         mConfirmPasswordView = (EditText) findViewById(R.id.password_confirm);
-        mRegisterButton = (Button) findViewById(R.id.email_register_button);
+        Button mRegisterButton = (Button) findViewById(R.id.email_register_button);
         mRegisterButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -238,6 +230,8 @@ public class RegisterActivity extends AppCompatActivity {
                 //ready to get response from server
                 return null;
             }else{
+                mAuthTask = null;
+                showProgress(false);
                 throw new Exception();
             }
         }

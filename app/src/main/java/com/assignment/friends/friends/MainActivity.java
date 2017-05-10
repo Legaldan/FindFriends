@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,10 +52,10 @@ public class MainActivity extends AppCompatActivity
             navigationView.setNavigationItemSelectedListener(this);
 
             initTime();
-            initWeather("37.5", "122.1");
+            initWeather("31.32", "120.62");
 
             TextView userNameView = (TextView)findViewById(R.id.username);
-            userNameView.setText(getString(R.string.say_hi) + username);
+            userNameView.setText("Hello! " + username);
 
             View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
 
@@ -63,6 +64,16 @@ public class MainActivity extends AppCompatActivity
 
             TextView barEmail = (TextView)headerLayout.findViewById(R.id.bar_email);
             barEmail.setText(this.email);
+
+
+            ImageView headerButton = (ImageView) headerLayout.findViewById(R.id.user_header_icon);
+            headerButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent profileIntent = new Intent(getApplicationContext(),ProfileActivity.class);
+                    startActivity(profileIntent);
+                }
+            });
 
         }
     }
