@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -188,35 +189,44 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public class UserRegisterTask extends HttpPostAsyncTask<Void,Integer>{
+    public class UserRegisterTask extends HttpPostAsyncTask<Void,Void>{
 
         private Profile profile;
 
         public UserRegisterTask(Context c, String msg, String path, Profile profile){
             super(c,msg,path);
-            profile = profile;
+            this.profile = profile;
         }
 
         @Override
-        protected void httpPostExecute(Integer id) throws Exception {
+        protected void httpPostExecute(Void nothing) throws Exception {
             mAuthTask = null;
             showProgress(false);
-
+            SharedPreferences preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE);
+            SharedPreferences.Editor e = preferences.edit();
+            //e.putInt("id",profile.getId());
+            e.putString("email", profile.getEmail());
+            e.putString("password", profile.getPassword());
+            e.putString("firstName", profile.getFirstName());
+            e.putString("surName", profile.getSurname());
+            e.commit();
             Intent intent = new Intent(context,MainActivity.class);
             finish();
             startActivity(intent);
         }
 
         @Override
-        protected Integer ownTask(OutputStream os) throws Exception {
+        protected Void ownTask(OutputStream os) throws Exception {
             String content = JSON.toJSONString(profile);
             os.write(content.getBytes());
             os.close();
-            if (conn.getResponseCode() == 200){
+            int code = conn.getResponseCode();
+            if (code < 300){
                 //ready to get response from server
-                InputStream is = conn.getInputStream();
+                //InputStream is = conn.getInputStream();
                 //String jsonResult = JsonHandler.readInputStream(is);
-                return JSON.parseObject(is,Integer.class);
+                //return JSON.parseObject(is,Integer.class);
+                return null;
             }else{
                 throw new Exception();
             }
