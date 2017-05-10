@@ -22,6 +22,10 @@ public abstract class HttpPostAsyncTask<Params, Result> extends AsyncTask<Params
     private String request_method;
     protected HttpURLConnection conn = null;
 
+    public void setErrorMsg(String msg){
+        error_msg = msg;
+    }
+
     public HttpPostAsyncTask(Context c, String msg, String path){
         super();
         context = c;
@@ -50,12 +54,10 @@ public abstract class HttpPostAsyncTask<Params, Result> extends AsyncTask<Params
 
     @Override
     protected void onPostExecute(Result result){
-        if (e instanceof UnknownHostException) {
-            Toast.makeText(context, "Please check your network", Toast.LENGTH_SHORT).show();
-        }
-        else  if (this.e != null) {
-            Toast.makeText(context, error_msg, Toast.LENGTH_SHORT).show();
-        }
+        if (e instanceof UnknownHostException)
+            Toast.makeText(context, "Please check your network",Toast.LENGTH_SHORT).show();
+        else  if (this.e != null || result == null)
+            Toast.makeText(context, error_msg,Toast.LENGTH_SHORT).show();
         else
             try {
                 httpPostExecute(result);
