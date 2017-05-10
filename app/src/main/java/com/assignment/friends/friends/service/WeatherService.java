@@ -55,11 +55,7 @@ public class WeatherService extends HttpGetAsyncTask<String,String> {
 
     @Override
     protected String ownTask(InputStream result) throws Exception{
-        String json = "";
-        Scanner inStream = new Scanner(result);
-        while(inStream.hasNextLine()){
-            json += inStream.nextLine();
-        }
+        String json = JsonHandler.readInputStream(result);
         String weatherInfo = JsonHandler.parseWeatherJson(json);//get the needed information
         return weatherInfo;
     }

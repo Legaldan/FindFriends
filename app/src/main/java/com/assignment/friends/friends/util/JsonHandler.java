@@ -8,7 +8,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.assignment.friends.friends.model.Profile;
 
+import java.io.InputStream;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by Li Yan on 2017/4/26.
@@ -31,6 +33,15 @@ public class JsonHandler {
         }finally {
             return result;
         }
+    }
+
+    public static String readInputStream(InputStream is){
+        String json = "";
+        Scanner scanner = new Scanner(is);
+        while(scanner.hasNextLine()){
+            json += scanner.nextLine();
+        }
+        return json;
     }
 
     public static Object parseSingleObject(String json){

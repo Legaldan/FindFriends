@@ -360,6 +360,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (mAutoLogin) {
                 SharedPreferences preferences = mContext.getSharedPreferences("user", Context.MODE_PRIVATE);
                 SharedPreferences.Editor e = preferences.edit();
+                e.putInt("id",profile.getId());
                 e.putString("email", mEmail);
                 e.putString("password", mPassword);
                 e.putString("firstName", profile.getFirstName());

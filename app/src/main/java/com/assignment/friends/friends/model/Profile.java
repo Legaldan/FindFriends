@@ -26,6 +26,13 @@ public class Profile {
 
     public Profile(){}
 
+    public Profile(String firstName, String surname, String email, String password) {
+        this.firstName = firstName;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+    }
+
     public Profile(int id, String firstName, String surname, String birth, int gender, String course, int studyMode, String address, String suburb, String nationality, String nativeLanguage, String favMovie, String favUnit, String currentJob, String email, String password) {
         this.id = id;
         this.firstName = firstName;
