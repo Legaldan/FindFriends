@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,11 +18,14 @@ import android.widget.EditText;
 
 import com.alibaba.fastjson.JSON;
 import com.assignment.friends.friends.model.Profile;
+import com.assignment.friends.friends.util.Encryption;
 import com.assignment.friends.friends.util.HttpPostAsyncTask;
 import com.assignment.friends.friends.util.JsonHandler;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -138,6 +142,15 @@ public class RegisterActivity extends AppCompatActivity {
             // perform the user login attempt.
             showProgress(true);
             String path = "http://192.168.191.1:8080/FindFriends/webresources/profile/";
+
+            try {
+                password = Encryption.getEncryptedPwd(password);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
             Profile profile = new Profile(firstName,surname,email,password);
             mAuthTask = new UserRegisterTask(this,getString(R.string.error_create_new_account),path,profile);
             mAuthTask.execute();
@@ -223,9 +236,6 @@ public class RegisterActivity extends AppCompatActivity {
             int code = conn.getResponseCode();
             if (code < 300){
                 //ready to get response from server
-                //InputStream is = conn.getInputStream();
-                //String jsonResult = JsonHandler.readInputStream(is);
-                //return JSON.parseObject(is,Integer.class);
                 return null;
             }else{
                 throw new Exception();

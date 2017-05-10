@@ -38,10 +38,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.assignment.friends.friends.model.Profile;
+import com.assignment.friends.friends.util.Encryption;
 import com.assignment.friends.friends.util.JsonHandler;
 
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -354,8 +357,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             List<Profile> profileList = JSON.parseArray(result,Profile.class);
             Profile profile = profileList.get(0);
-            if(!mPassword.equals(profile.getPassword()))
-                return false;
+
+            try {
+                if(!Encryption.validPassword(mPassword,profile.getPassword()))
+                    return false;
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
 
             if (mAutoLogin) {
                 SharedPreferences preferences = mContext.getSharedPreferences("user", Context.MODE_PRIVATE);

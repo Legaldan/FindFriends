@@ -33,13 +33,10 @@
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RegisterActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_register"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
