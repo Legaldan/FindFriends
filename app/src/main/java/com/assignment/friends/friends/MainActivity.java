@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import java.text.DateFormat;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,6 +27,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private String username;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +55,14 @@ public class MainActivity extends AppCompatActivity
 
             TextView userNameView = (TextView)findViewById(R.id.username);
             userNameView.setText(getString(R.string.say_hi) + username);
-            /*
-            TextView barUsername = (TextView)findViewById(R.id.bar_username);
+
+            View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
+
+            TextView barUsername = (TextView)headerLayout.findViewById(R.id.bar_username);
             barUsername.setText(this.username);
-            */
+
+            TextView barEmail = (TextView)headerLayout.findViewById(R.id.bar_email);
+            barEmail.setText(this.email);
 
         }
     }
@@ -113,7 +116,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            SharedPreferences preferences = this.getSharedPreferences("user", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.remove("firstName");
+            editor.remove("surname");
+            editor.remove("email");
+            editor.remove("password");
+            editor.commit();
+            finish();
             return true;
         }
 
@@ -154,6 +165,7 @@ public class MainActivity extends AppCompatActivity
             return false;
         }else{
             username = firstName + " " + surName;
+            this.email = email;
             return true;
         }
     }

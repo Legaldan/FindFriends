@@ -10,7 +10,7 @@
     <string name="title_activity_register">Register</string>
 
 
-    <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
     <!-- Strings related to main page -->
     <string name="welcome">Welcome</string>
     <string name="error_weather_init">Cannot get weather information</string>

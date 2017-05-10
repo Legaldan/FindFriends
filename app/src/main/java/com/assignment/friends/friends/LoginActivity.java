@@ -374,7 +374,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 e.putString("email", mEmail);
                 e.putString("password", mPassword);
                 e.putString("firstName", profile.getFirstName());
-                e.putString("surName", profile.getSurname());
+                e.putString("surname", profile.getSurname());
                 e.commit();
             }
             return true;

@@ -221,7 +221,7 @@ public class RegisterActivity extends AppCompatActivity {
             e.putString("email", profile.getEmail());
             e.putString("password", profile.getPassword());
             e.putString("firstName", profile.getFirstName());
-            e.putString("surName", profile.getSurname());
+            e.putString("surname", profile.getSurname());
             e.commit();
             Intent intent = new Intent(context,MainActivity.class);
             finish();
