@@ -1,5 +1,6 @@
 package com.assignment.friends.friends;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebView;
@@ -23,8 +24,11 @@ public class MovieDetailActivity extends AppCompatActivity {
             }
         });
 
+        Intent intent = getIntent();
+        String url = intent.getStringExtra("url");
+
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://www.imdb.com/title/tt0069137/");
+        webView.loadUrl(url);
         setContentView(webView);
     }
 
@@ -33,3 +37,5 @@ public class MovieDetailActivity extends AppCompatActivity {
         finish();
     }
 }
+
+

@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.assignment.friends.friends.service.WeatherService;
+import com.assignment.friends.friends.util.JsonHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onClick(View v) {
                     Intent profileIntent = new Intent(getApplicationContext(),ProfileActivity.class);
+                    profileIntent.putExtra("email",email);
                     startActivity(profileIntent);
                 }
             });
@@ -154,6 +156,8 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             } else if (id == R.id.nav_gallery) {
                 Intent intent = new Intent(this, MovieDetailActivity.class);
+                //String url = JsonHandler.parseMovieJson();
+                intent.putExtra("url", "http://www.imdb.com/title/tt0069137/" );
                 startActivity(intent);
             } else if (id == R.id.nav_slideshow) {
 

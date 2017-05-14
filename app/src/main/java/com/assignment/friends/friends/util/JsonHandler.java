@@ -35,6 +35,18 @@ public class JsonHandler {
         }
     }
 
+    public static String parseMovieJson(String source){
+        String result = "";
+        try {
+            JSONObject item = JSON.parseObject(source).getJSONArray("items").getJSONObject(0);
+            result = item.getString("link");
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            return result;
+        }
+    }
+
     public static String readInputStream(InputStream is){
         String json = "";
         Scanner scanner = new Scanner(is);

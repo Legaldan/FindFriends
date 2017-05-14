@@ -125,4 +125,6 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_friends_list">FriendsListActivity</string>
+
+    <string name="null_profile_details">not set</string>
 </resources>

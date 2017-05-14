@@ -20,6 +20,7 @@ public class Profile {
     private String nativeLanguage;
     private String favMovie;
     private String favUnit;
+    private String favSport;
     private String currentJob;
     private String email;
     private String password;
@@ -33,7 +34,7 @@ public class Profile {
         this.password = password;
     }
 
-    public Profile(int id, String firstName, String surname, String birth, int gender, String course, int studyMode, String address, String suburb, String nationality, String nativeLanguage, String favMovie, String favUnit, String currentJob, String email, String password) {
+    public Profile(int id, String firstName, String surname, String birth, int gender, String course, int studyMode, String address, String suburb, String nationality, String nativeLanguage, String favMovie, String favUnit, String currentJob,String favSport, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.surname = surname;
@@ -50,6 +51,15 @@ public class Profile {
         this.currentJob = currentJob;
         this.email = email;
         this.password = password;
+        this.favSport = favSport;
+    }
+
+    public String getFavSport() {
+        return favSport;
+    }
+
+    public void setFavSport(String favSport) {
+        this.favSport = favSport;
     }
 
     public void setId(int id) {
