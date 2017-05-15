@@ -97,7 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
         mGender.append(gender==0?"Male":"Female");
 
         String birth = mProfile.getBirth();
-        mBirth.append(birth==null?getString(R.string.null_profile_details):birth);
+        mBirth.append(birth==null?getString(R.string.null_profile_details):birth.substring(0,10));
 
         int studyMode = mProfile.getStudyMode();
         mStudyMode.append(studyMode==0?"Part Time":"Full Time");

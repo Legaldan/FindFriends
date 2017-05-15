@@ -144,6 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             Profile profile = new Profile(firstName,surname,email,password);
+
             mAuthTask = new UserRegisterTask(this,getString(R.string.error_create_new_account),path,profile);
             mAuthTask.execute();
         }

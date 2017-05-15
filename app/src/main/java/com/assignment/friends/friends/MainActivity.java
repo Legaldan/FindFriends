@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity
             TextView barEmail = (TextView)headerLayout.findViewById(R.id.bar_email);
             barEmail.setText(this.email);
 
+            //ImageView barHeader = (ImageView)headerLayout.findViewById(R.id.user_header_icon);
+            //barHeader.setImageBitmap();
+
 
             ImageView headerButton = (ImageView) headerLayout.findViewById(R.id.user_header_icon);
             headerButton.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +136,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_logout) {
             SharedPreferences preferences = this.getSharedPreferences("user", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
+            editor.remove("id");
             editor.remove("firstName");
             editor.remove("surname");
             editor.remove("email");

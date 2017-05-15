@@ -182,7 +182,7 @@ public class FriendsListActivity extends AppCompatActivity {
                                     AlertDialog.Builder builder = new AlertDialog.Builder(FriendsListActivity.this);
                                     AlertDialog alert = builder.setIcon(R.mipmap.own_ic_launcher)
                                             .setTitle("Attention")
-                                            .setMessage("Are you sure to delete this friends?")
+                                            .setMessage("Are you sure to delete this friend -- \n"+friendsList.get(position).getSurname())
                                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {

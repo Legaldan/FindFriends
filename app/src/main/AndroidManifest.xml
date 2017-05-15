@@ -40,7 +40,7 @@
             android:label="Movie Details" />
         <activity
             android:name=".FriendsListActivity"
-            android:label="@string/title_activity_friends_list"
+            android:label="My Friends"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
