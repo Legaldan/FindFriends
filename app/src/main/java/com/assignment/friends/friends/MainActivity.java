@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity
 
     private String username;
     private String email;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,22 +151,23 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-            if (id == R.id.nav_camera) {
+            if (id == R.id.nav_friends) {
                 // Handle the camera action
                 Intent intent = new Intent(this, FriendsListActivity.class);
+                intent.putExtra("id",id);
                 startActivity(intent);
-            } else if (id == R.id.nav_gallery) {
+            } else if (id == R.id.nav_search) {
                 Intent intent = new Intent(this, MovieDetailActivity.class);
                 //String url = JsonHandler.parseMovieJson();
                 intent.putExtra("url", "http://www.imdb.com/title/tt0069137/" );
                 startActivity(intent);
-            } else if (id == R.id.nav_slideshow) {
+            } else if (id == R.id.nav_edit) {
 
-            } else if (id == R.id.nav_manage) {
+            } else if (id == R.id.nav_report) {
 
             } else if (id == R.id.nav_share) {
 
-            } else if (id == R.id.nav_send) {
+            } else if (id == R.id.nav_exit) {
 
             }
 
@@ -177,14 +179,16 @@ public class MainActivity extends AppCompatActivity
 
     private boolean isLogin(){
         SharedPreferences preferences = this.getSharedPreferences("user", Context.MODE_PRIVATE);
+
         String email = preferences.getString("email","");
-        String surName = preferences.getString("surName","");
+        String surname = preferences.getString("surName","");
         String firstName = preferences.getString("firstName","");
         if (email.isEmpty()){
             return false;
         }else{
-            username = firstName + " " + surName;
+            username = firstName + " " + surname;
             this.email = email;
+            this.id = preferences.getInt("id",0);
             return true;
         }
     }

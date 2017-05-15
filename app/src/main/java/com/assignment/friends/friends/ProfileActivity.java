@@ -34,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView mFavoriteUnit;
     private TextView mFavoriteSport;
     private TextView mCurrentJob;
+    private Profile mProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +73,58 @@ public class ProfileActivity extends AppCompatActivity {
         mCurrentJob = (TextView)findViewById(R.id.current_job);
 
         Intent intent = getIntent();
-        String email = intent.getStringExtra("email");
-        if (!email.equals("")) {
-            String path = "http://192.168.191.1:8080/FindFriends/webresources/profile/findByEmail/" + email;
-            GetProfileTask task = new GetProfileTask(this, "Loading Profile failed", path);
-            task.execute();
+        mProfile = (Profile)intent.getSerializableExtra("profile");
+        if (mProfile != null) {
+            this.setTitle("Information Details");
+            setView();
         }
+        else {
+            String email = intent.getStringExtra("email");
+            if (!email.equals("")) {
+                String path = "http://192.168.191.1:8080/FindFriends/webresources/profile/findByEmail/" + email;
+                GetProfileTask task = new GetProfileTask(this, "Loading Profile failed", path);
+                task.execute();
+            }
+        }
+    }
+
+    protected void setView(){
+        mFirstName.append(mProfile.getFirstName());
+        mSurname.append(mProfile.getSurname());
+        mEmail.append(mProfile.getEmail());
+
+        int gender = mProfile.getGender();
+        mGender.append(gender==0?"Male":"Female");
+
+        String birth = mProfile.getBirth();
+        mBirth.append(birth==null?getString(R.string.null_profile_details):birth);
+
+        int studyMode = mProfile.getStudyMode();
+        mStudyMode.append(studyMode==0?"Part Time":"Full Time");
+
+        String nationality = mProfile.getNationality();
+        mNationality.append(nationality==null?getString(R.string.null_profile_details):nationality);
+
+        String address = mProfile.getAddress();
+        mAddress.append(address==null?getString(R.string.null_profile_details):address);
+
+        String course = mProfile.getCourse();
+        mCourse.append(course==null?getString(R.string.null_profile_details):course);
+
+        String nativeLanguage = mProfile.getNativeLanguage();
+        mNativeLanguage.append(nativeLanguage==null?getString(R.string.null_profile_details):nativeLanguage);
+
+        String currentJob = mProfile.getCurrentJob();
+        mCurrentJob.append(currentJob==null?getString(R.string.null_profile_details):currentJob);
+
+        String favoriteMovie = mProfile.getFavMovie();
+        mFavoriteMovie.append(favoriteMovie==null?getString(R.string.null_profile_details):favoriteMovie);
+
+        String favoriteUnit = mProfile.getFavUnit();
+        mFavoriteUnit.append(favoriteUnit==null?getString(R.string.null_profile_details):favoriteUnit);
+
+        String favoriteSport = mProfile.getFavSport();
+        mFavoriteSport.append(favoriteSport==null?getString(R.string.null_profile_details):favoriteSport);
     }
 
     class GetProfileTask extends HttpGetAsyncTask<Void,Profile>{
@@ -88,42 +135,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         @Override
         protected void httpPostExecute(Profile profile) throws Exception {
-            mFirstName.append(profile.getFirstName());
-            mSurname.append(profile.getSurname());
-            mEmail.append(profile.getEmail());
-
-            int gender = profile.getGender();
-            mGender.append(gender==0?"Male":"Female");
-
-            String birth = profile.getBirth();
-            mBirth.append(birth==null?getString(R.string.null_profile_details):birth);
-
-            int studyMode = profile.getStudyMode();
-            mStudyMode.append(studyMode==0?"Part Time":"Full Time");
-
-            String nationality = profile.getNationality();
-            mNationality.append(nationality==null?getString(R.string.null_profile_details):nationality);
-
-            String address = profile.getAddress();
-            mAddress.append(address==null?getString(R.string.null_profile_details):address);
-
-            String course = profile.getCourse();
-            mCourse.append(course==null?getString(R.string.null_profile_details):course);
-
-            String nativeLanguage = profile.getNativeLanguage();
-            mNativeLanguage.append(nativeLanguage==null?getString(R.string.null_profile_details):nativeLanguage);
-
-            String currentJob = profile.getCurrentJob();
-            mCurrentJob.append(currentJob==null?getString(R.string.null_profile_details):currentJob);
-
-            String favoriteMovie = profile.getFavMovie();
-            mFavoriteMovie.append(favoriteMovie==null?getString(R.string.null_profile_details):favoriteMovie);
-
-            String favoriteUnit = profile.getFavUnit();
-            mFavoriteUnit.append(favoriteUnit==null?getString(R.string.null_profile_details):favoriteUnit);
-
-            String favoriteSport = profile.getFavSport();
-            mFavoriteSport.append(favoriteSport==null?getString(R.string.null_profile_details):favoriteSport);
+            mProfile = profile;
+            setView();
         }
 
         @Override

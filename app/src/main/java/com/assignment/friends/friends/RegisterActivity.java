@@ -215,9 +215,9 @@ public class RegisterActivity extends AppCompatActivity {
             e.putString("firstName", profile.getFirstName());
             e.putString("surname", profile.getSurname());
             e.commit();
-            Intent intent = new Intent(context,MainActivity.class);
+            //Intent intent = new Intent(context,MainActivity.class);
             finish();
-            startActivity(intent);
+            //startActivity(intent);
         }
 
         @Override

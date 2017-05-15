@@ -1,12 +1,13 @@
 package com.assignment.friends.friends.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Li Yan on 2017-05-06.
  */
 
-public class Profile {
+public class Profile implements Serializable{
     private int id;
     private String firstName;
     private String surname;
