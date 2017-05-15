@@ -161,11 +161,14 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra("id",id);
                 startActivity(intent);
             } else if (id == R.id.nav_search) {
-                Intent intent = new Intent(this, MovieDetailActivity.class);
+                Intent intent = new Intent(this, SearchFriendsActivity.class);
                 //String url = JsonHandler.parseMovieJson();
-                intent.putExtra("url", "http://www.imdb.com/title/tt0069137/" );
+                //intent.putExtra("url", "http://www.imdb.com/title/tt0069137/" );
                 startActivity(intent);
             } else if (id == R.id.nav_edit) {
+                Intent intent = new Intent(this, EditProfileActivity.class);
+                intent.putExtra("email",email);
+                startActivity(intent);
 
             } else if (id == R.id.nav_report) {
 

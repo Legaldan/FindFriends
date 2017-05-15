@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="study_model">
+        <item>Full-Time</item>
+        <item>Part-Time</item>
+    </string-array>
+</resources>

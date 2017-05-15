@@ -41,7 +41,9 @@
         <activity
             android:name=".FriendsListActivity"
             android:label="My Friends"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".SearchFriendsActivity"></activity>
     </application>
 
 </manifest>
