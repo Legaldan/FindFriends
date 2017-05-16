@@ -36,6 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView mCurrentJob;
     private Profile mProfile;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

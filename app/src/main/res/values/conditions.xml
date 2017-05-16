@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="conditions">
+        <item>@string/no_condition_selected</item>
+        <item>Nationality</item>
+        <item>Course</item>
+        <item>Gender</item>
+        <item>Study Mode</item>
+    </array>
+</resources>

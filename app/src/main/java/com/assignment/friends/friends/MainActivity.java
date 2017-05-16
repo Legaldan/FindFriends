@@ -14,12 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.assignment.friends.friends.service.WeatherService;
-import com.assignment.friends.friends.util.JsonHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -173,7 +171,8 @@ public class MainActivity extends AppCompatActivity
             } else if (id == R.id.nav_report) {
 
             } else if (id == R.id.nav_share) {
-
+                Intent intent = new Intent(this, MapActivity.class);
+                startActivity(intent);
             } else if (id == R.id.nav_exit) {
 
             }

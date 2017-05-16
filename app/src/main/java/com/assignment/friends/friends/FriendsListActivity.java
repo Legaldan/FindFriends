@@ -1,9 +1,12 @@
 package com.assignment.friends.friends;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -36,6 +39,7 @@ public class FriendsListActivity extends AppCompatActivity {
     private SwipeMenuListView mListView;
     protected List<Profile> friendsList;
     private int id;
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,10 @@ public class FriendsListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Intent intent = getIntent();
+        dbHelper = new DatabaseHelper(this);
+
+
+        //Intent intent = getIntent();
         //id = intent.getIntExtra("id",0);
         id = 3;
         if(id != 0) {
@@ -211,6 +218,29 @@ public class FriendsListActivity extends AppCompatActivity {
 
                 // Right
                 mListView.setSwipeDirection(SwipeMenuListView.DIRECTION_LEFT);
+
+
+                //write to db
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                ContentValues values = new ContentValues();
+                for (Profile p : profiles){
+                    values.put("first_name",p.getFirstName());
+                    values.put("surname",p.getSurname());
+                    values.put("gender",p.getGender());
+                    values.put("birth",p.getBirth());
+                    values.put("course",p.getCourse());
+                    values.put("address",p.getAddress());
+                    values.put("nationality",p.getNationality());
+                    values.put("native_language",p.getNativeLanguage());
+                    values.put("current_job",p.getCurrentJob());
+                    values.put("email",p.getEmail());
+                    values.put("suburb",p.getSuburb());
+                    values.put("fav_sport",p.getFavSport());
+                    values.put("fav_movie",p.getFavMovie());
+                    values.put("fav_unit",p.getFavUnit());
+                    db.insert("friends", null, values);
+                }
+                db.close();
             }
         }
 
@@ -246,6 +276,32 @@ public class FriendsListActivity extends AppCompatActivity {
             String json = JsonHandler.readInputStream(result);
 
             return Integer.parseInt(json);
+        }
+    }
+
+
+    class DatabaseHelper extends SQLiteOpenHelper {
+        private static final String name = "friends";
+        private static final int version = 1;
+
+        public DatabaseHelper(Context context) {
+            super(context, name, null, version);
+        }
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            //create table to store user's friends information locally
+            db.execSQL("CREATE TABLE IF NOT EXISTS friends (friend_id integer primary key autoincrement, " +
+                    "first_name varchar(50), surname varchar(50)," +
+                    "birth varchar(20), gender integer, course varchar(10)," +
+                    "address varchar(100), suburb varchar(50), nationality varchar(20)," +
+                    "native_language varchar(20), fav_sport varchar(50)," +
+                    "fav_unit varchar(50), fav_movie varchar(50)," +
+                    "current_job varchar(50), email varchar(50)");
+
+        }
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
         }
     }
 

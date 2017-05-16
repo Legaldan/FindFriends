@@ -54,8 +54,7 @@
                 <ImageView
                     android:layout_width="85dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/imageView"
-                    android:src="@drawable/male1" />
+                    android:id="@+id/imageView"/>
 
             </LinearLayout>
 

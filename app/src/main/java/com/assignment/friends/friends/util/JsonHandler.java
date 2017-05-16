@@ -35,6 +35,7 @@ public class JsonHandler {
         }
     }
 
+
     public static String parseMovieJson(String source){
         String result = "";
         try {

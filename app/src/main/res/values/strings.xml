@@ -127,4 +127,5 @@
     <string name="title_activity_friends_list">FriendsListActivity</string>
 
     <string name="null_profile_details">not set</string>
+    <string name="no_condition_selected">All</string>
 </resources>

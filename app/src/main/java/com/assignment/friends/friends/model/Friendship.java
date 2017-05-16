@@ -13,8 +13,7 @@ public class Friendship {
     private int stu1Id;
     private int stu2Id;
 
-    public Friendship(int id, Date startTime, Date endTime, int stu1Id, int stu2Id) {
-        this.id = id;
+    public Friendship(Date startTime, Date endTime, int stu1Id, int stu2Id) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.stu1Id = stu1Id;
