@@ -12,9 +12,11 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +55,34 @@ public class SearchFriendsActivity extends AppCompatActivity {
         String path = "http://192.168.191.1:8080/FindFriends/webresources/profile/";
         GetListTask getTask = new GetListTask(this, "failed to get friends list", path);
         getTask.execute();
+
+        final Spinner condition1 = (Spinner)findViewById(R.id.condition2);
+        final Spinner condition2 = (Spinner)findViewById(R.id.condition1);
+
+        condition1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0){
+                    //cannot choose the same condition
+                    if (position == condition2.getSelectedItemPosition()){
+                        Toast.makeText(getApplicationContext(),"You cannot choose the same category!",Toast.LENGTH_SHORT).show();
+                        condition1.setSelection(0);
+                    }else{
+                        String path = "http://192.168.191.1:8080/FindFriends/webresources/profile/NewFriendsV2/"+id+"/"+condition1.getSelectedItem().toString().toLowerCase();
+                        if (condition2.getSelectedItemPosition() != 0){
+                            path += "&" + condition2.getSelectedItem().toString().toLowerCase();
+                        }
+                        GetListTask searchTask = new GetListTask(getApplicationContext(), "failed to get friends list", path);
+                        searchTask.execute();
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
@@ -79,9 +110,9 @@ public class SearchFriendsActivity extends AppCompatActivity {
                         R.layout.serach_friend_item, null);
                 new ViewHolder(convertView);
             }
-            ViewHolder holder = (ViewHolder) convertView.getTag();
+            final ViewHolder holder = (ViewHolder) convertView.getTag();
             Profile item = getItem(position);
-            int index = (int)item.getFirstName().charAt(0)%6;
+            int index = (int)item.getSurname().charAt(0)%6;
             String fileName = "ic_header_"+index;
             int id =getResources().getIdentifier(fileName,"drawable",getApplicationContext().getPackageName());
             holder.iv_icon.setImageResource(id);
@@ -92,6 +123,15 @@ public class SearchFriendsActivity extends AppCompatActivity {
             holder.tv_gender.setText(item.getGender() == 0 ? "Male" : "Female");
             holder.tv_nation.setText(item.getNationality());
             holder.tv_birth.setText(item.getBirth().substring(0,10));
+            holder.tv_movie.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String path = "https://www.googleapis.com/customsearch/v1?" +
+                            "key=AIzaSyBZRhy-p0k3BDAkL98opt4ErUstRd8Q1_E&cx=001255585214690453330:_o3th2w1rye&num=1&q="+ holder.tv_movie.getText().toString();
+                    GetMovie movieTask = new GetMovie(getApplicationContext(),"cannot get movie information",path);
+                    movieTask.execute();
+                }
+            });
             return convertView;
         }
 
@@ -132,6 +172,25 @@ public class SearchFriendsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    class GetMovie extends HttpGetAsyncTask<Void,String>{
+
+        public GetMovie(Context c, String msg, String path) {
+            super(c, msg, path);
+        }
+
+        @Override
+        protected void httpPostExecute(String str) throws Exception {
+            Intent intent = new Intent(getApplicationContext(),MovieDetailActivity.class);
+            intent.putExtra("url",str);
+            startActivity(intent);
+        }
+
+        @Override
+        protected String ownTask(InputStream result) throws Exception {
+            String json = JsonHandler.readInputStream(result);
+            return JsonHandler.parseMovieJson(json);
+        }
+    }
 
     class GetListTask extends HttpGetAsyncTask<Void,List<Profile>> {
 
@@ -148,6 +207,7 @@ public class SearchFriendsActivity extends AppCompatActivity {
                 mAdapter = new AppAdapter();
                 mListView = (SwipeMenuListView)findViewById(R.id.friends_list_view);
                 mListView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
 
                 SwipeMenuCreator creator = new SwipeMenuCreator() {
                     @Override
@@ -184,8 +244,8 @@ public class SearchFriendsActivity extends AppCompatActivity {
                                 openProfile(friendsList.get(position));
                                 break;
                             case 1:
-                                String path = "http://192.168.191.1:8080/FindFriends/webresources/friendship/";
-                                AddFriendTask addTask = new AddFriendTask(getApplicationContext(),"add new friend failed",path,friendsList.get(position).getId());
+                                String path = "http://192.168.191.1:8080/FindFriends/webresources/friendship/add/"+id+"/"+friendsList.get(position).getId();
+                                AddFriendTask addTask = new AddFriendTask(getApplicationContext(),"add new friend failed",path);
                                 addTask.execute();
                                 break;
                         }
@@ -203,36 +263,31 @@ public class SearchFriendsActivity extends AppCompatActivity {
         protected List<Profile> ownTask(InputStream result) throws Exception {
             String json = JsonHandler.readInputStream(result);
             List<Profile> profileList = JSON.parseArray(json,Profile.class);
+            for (Profile temp : profileList){
+                if (temp.getId() == id)
+                    profileList.remove(temp);
+            }
             return profileList;
         }
     }
 
 
-    class AddFriendTask extends HttpPostAsyncTask<Integer,Void>{
-        int stu2Id;
+    class AddFriendTask extends HttpGetAsyncTask<Void,Void>{
 
-        public AddFriendTask(Context c, String msg, String path, int p) {
+        public AddFriendTask(Context c, String msg, String path) {
             super(c, msg, path);
-            stu2Id = p;
         }
 
         @Override
         protected void httpPostExecute(Void aVoid) throws Exception {
-            Toast.makeText(context,"Add successfully",Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(getApplicationContext(),"Add successfully",Toast.LENGTH_SHORT).show();
         }
 
         @Override
-        protected Void ownTask(OutputStream os) throws Exception {
+        protected Void ownTask(InputStream result) throws Exception {
+            String json = JsonHandler.readInputStream(result);
+            if (JSON.parseObject(json,Integer.class) != 0){
 
-            Friendship friendship = new Friendship(new Date(),null,id,stu2Id);
-
-            String content = JSON.toJSONString(friendship);
-            os.write(content.getBytes());
-            os.close();
-            int code = conn.getResponseCode();
-            if (code < 300){
-                //ready to get response from server
                 return null;
             }else{
                 throw new Exception();

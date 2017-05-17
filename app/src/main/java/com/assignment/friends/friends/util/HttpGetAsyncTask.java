@@ -49,7 +49,7 @@ public abstract class HttpGetAsyncTask<Params,Result> extends AsyncTask<Params,V
     protected void onPostExecute(Result result){
         if (e instanceof UnknownHostException)
             Toast.makeText(context, "Please check your network",Toast.LENGTH_SHORT).show();
-        else  if (this.e != null || result == null)
+        else  if (this.e != null)
             Toast.makeText(context, error_msg,Toast.LENGTH_SHORT).show();
         else
             try {

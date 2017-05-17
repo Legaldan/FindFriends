@@ -1,5 +1,7 @@
 package com.assignment.friends.friends.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
 /**
@@ -8,7 +10,9 @@ import java.util.Date;
 
 public class Friendship {
     private int id;
+    @JSONField (format = "yyyy-MM-dd")
     private Date startTime;
+    @JSONField (format = "yyyy-MM-dd")
     private Date endTime;
     private int stu1Id;
     private int stu2Id;

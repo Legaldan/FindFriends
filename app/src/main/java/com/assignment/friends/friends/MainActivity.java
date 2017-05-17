@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity
             if (id == R.id.nav_friends) {
                 // Handle the camera action
                 Intent intent = new Intent(this, FriendsListActivity.class);
-                intent.putExtra("id",id);
+                intent.putExtra("id",this.id);
                 startActivity(intent);
             } else if (id == R.id.nav_search) {
                 Intent intent = new Intent(this, SearchFriendsActivity.class);
@@ -169,12 +169,14 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
 
             } else if (id == R.id.nav_report) {
+                Intent intent = new Intent(this, ReportActivity.class);
+                startActivity(intent);
 
             } else if (id == R.id.nav_share) {
                 Intent intent = new Intent(this, MapActivity.class);
                 startActivity(intent);
             } else if (id == R.id.nav_exit) {
-
+                finish();
             }
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

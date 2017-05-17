@@ -61,7 +61,11 @@
         <activity
             android:name=".SearchFriendsActivity"
             android:label="Find New Friends" />
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".MapActivity" />
+        <activity
+            android:name=".ReportActivity"
+            android:label="@string/title_activity_report"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

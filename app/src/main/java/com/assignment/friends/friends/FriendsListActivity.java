@@ -15,8 +15,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,9 +53,10 @@ public class FriendsListActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
 
 
-        //Intent intent = getIntent();
-        //id = intent.getIntExtra("id",0);
-        id = 3;
+
+
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id",0);
         if(id != 0) {
             String path = "http://192.168.191.1:8080/FindFriends/webresources/friendship/" + id;
             GetListTask getTask = new GetListTask(this, "failed to get friends list", path);
@@ -296,7 +299,7 @@ public class FriendsListActivity extends AppCompatActivity {
                     "address varchar(100), suburb varchar(50), nationality varchar(20)," +
                     "native_language varchar(20), fav_sport varchar(50)," +
                     "fav_unit varchar(50), fav_movie varchar(50)," +
-                    "current_job varchar(50), email varchar(50)");
+                    "current_job varchar(50), email varchar(50))");
 
         }
         @Override
